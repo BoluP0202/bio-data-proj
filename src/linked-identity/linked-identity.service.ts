@@ -1,26 +1,77 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { BioDatum } from 'src/bio-data/entities/bio-datum.entity';
+import { Repository } from 'typeorm';
 import { CreateLinkedIdentityDto } from './dto/create-linked-identity.dto';
 import { UpdateLinkedIdentityDto } from './dto/update-linked-identity.dto';
+import { LinkedIdentity } from './entities/linked-identity.entity';
+
 
 @Injectable()
 export class LinkedIdentityService {
-  create(createLinkedIdentityDto: CreateLinkedIdentityDto) {
-    return 'This action adds a new linkedIdentity';
+
+  constructor(
+    @InjectRepository(LinkedIdentity)
+    private linkedIdentityRepository: Repository<LinkedIdentity>,
+  ){ }
+  
+  async create(createLinkedIdentityDto: CreateLinkedIdentityDto) {
+    const newLinkedIdentity = this.linkedIdentityRepository.create(createLinkedIdentityDto);
+    }
+    //return 'This action adds a new linkedIdentity';
+
+  async findAll() {
+    //return `This action returns all linkedIdentitys`;
+    return await this.linkedIdentityRepository.find(/*{ relations: ['linked-identity'] }*/);
   }
 
-  findAll() {
-    return `This action returns all linkedIdentity`;
+  async findOne(entry: number) {
+    //return `This action returns a #${entry} linkedIdentity`;
+    return await this.linkedIdentityRepository.findOne(entry);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} linkedIdentity`;
+  async update(entry: number, updateLinkedIdentityDto: UpdateLinkedIdentityDto) {
+    //return `This action updates a #${entry} linkedIdentity`;
+    return await this.linkedIdentityRepository.update(entry, updateLinkedIdentityDto);
   }
 
-  update(id: number, updateLinkedIdentityDto: UpdateLinkedIdentityDto) {
-    return `This action updates a #${id} linkedIdentity`;
+  async remove(entry: number) {
+    //return `This action removes a #${entry} linkedIdentity`;
+    return await this.linkedIdentityRepository.delete(entry);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} linkedIdentity`;
+  /* Work on relationships */
+  async setBioDataByEntry(linkedIdentityEntry: number, bioDataEntry: number) {
+    try {
+      return await
+      this.linkedIdentityRepository.createQueryBuilder()
+      .relation(LinkedIdentity, "bio-data")
+      .of(linkedIdentityEntry)
+      .set(bioDataEntry)
+    } 
+    catch (error) {
+      throw new HttpException({
+      status:
+      HttpStatus.INTERNAL_SERVER_ERROR,
+      error: `There was a problem setting bio-data for
+      linkedIdentity: ${error.message}`,
+      },
+      HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+
+  async unsetBioDataByEntry(linkedIdentityEntry: number) {
+    try {
+      return await this.linkedIdentityRepository.createQueryBuilder()
+        .relation(LinkedIdentity, "bio-data")
+        .of(linkedIdentityEntry)
+        .set(null)
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: `There was a problem unsetting bio-data for linkedIdentity: ${error.message}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

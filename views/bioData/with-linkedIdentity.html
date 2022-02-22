@@ -12,7 +12,7 @@
                 <a href="/about-us">About Us</a>
             </div>
             <div>
-                <a href="/linked-identity/create" class="active">Add Linked Identity</a>
+                <a href="/bio-data/create" class="active">Add Bio Data</a>
             </div>
         </div>
         <div class="navigation-bar-right">
@@ -86,6 +86,26 @@
                         <input class="input" id="profession" name="profession" type="text" placeholder="Profession">
                     </div>
                 </div>
+                <div class="field">
+                    <label class="label">NIN:</label>
+                    <div class="control has-icons-right">
+                        <input class="input" id="NIN" name="NIN" type="text" placeholder="NIN">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">BVN:</label>
+                    <div class="control has-icons-right">
+                        <input class="input" id="BVN" name="BVN" type="text" placeholder="BVN">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Phone Number:</label>
+                    <div class="control has-icons-right">
+                        <input class="input" id="phoneNumber" name="phoneNumber" type="text" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                
                 <div class="field is-grouped">
                     <div class="control">
                         <button type="submit" id="submitCreateBioDataForm" class="button is-link is-small">Submit</button>
@@ -111,6 +131,8 @@
         </div>
     </div>
 </section>
+
+
 
 
 {% endblock %}

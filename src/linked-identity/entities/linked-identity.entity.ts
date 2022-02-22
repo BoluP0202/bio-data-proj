@@ -6,13 +6,13 @@ export class LinkedIdentity {
     entry: number;
 
     @Column()
-    NIN: number;
+    NIN: string;
 
     @Column({nullable: true})
-    BVN: number;
+    BVN: string;
 
     @Column()
-    phoneNumber: number;
+    phoneNumber: string;
 
     @JoinColumn()
     @OneToOne(type => BioDatum, bioDatum => bioDatum.linkedIdentity, {cascade:true})

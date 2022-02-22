@@ -6,17 +6,26 @@ import { CreateLinkedIdentityDto } from './dto/create-linked-identity.dto';
 import { UpdateLinkedIdentityDto } from './dto/update-linked-identity.dto';
 import { LinkedIdentity } from './entities/linked-identity.entity';
 
-
 @Injectable()
 export class LinkedIdentityService {
 
   constructor(
     @InjectRepository(LinkedIdentity)
     private linkedIdentityRepository: Repository<LinkedIdentity>,
+   /* @InjectRepository(BioDatum)
+    private bioDataRepository: Repository<BioDatum>*/
   ){ }
   
   async create(createLinkedIdentityDto: CreateLinkedIdentityDto) {
     const newLinkedIdentity = this.linkedIdentityRepository.create(createLinkedIdentityDto);
+
+    /*if(createLinkedIdentityDto.bioDatum){
+      const newBioData = this.bioDataRepository.create(createLinkedIdentityDto.bioDatum);
+      const bioDatum: BioDatum = await this.bioDataRepository.save(newBioData);
+      newLinkedIdentity.bioDatum = bioDatum;
+    }*/
+    
+    return this.linkedIdentityRepository.save(newLinkedIdentity)
     }
     //return 'This action adds a new linkedIdentity';
 

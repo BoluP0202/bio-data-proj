@@ -136,13 +136,7 @@
         return false;
     }
 
-    const email = document.getElementById('email').value;
-    if (email == '') {
-        email.reportValidity();
-        return false;
-    }
-
-    const dateOfBirth = document.getElementById('dateOfBirth').value;
+    const dateOfBirth = document.getElementById('DOB').value;
     if (dateOfBirth == '') {
         dateOfBirth.reportValidity();
         return false;
@@ -150,8 +144,15 @@
     
     const nationality = document.getElementById('nationality').value;
     
+    const countryOfBirth = document.getElementById('countryOfBirth').value;
+
+    const stateOfBirth = document.getElementById('stateOfBirth').value;
+
+    const townOfBirth = document.getElementById('townOfBirth').value;
+    
     const address = document.getElementById('address').value;
 
+    const profession = document.getElementById('profession').value;
 
     //start the button spinner
     document.getElementById("submitCreateBioDataForm").classList.add("is-loading");
@@ -163,7 +164,7 @@
             'Content-Type': 'application/json'
         },
         //credentials: 'same-origin',
-        body: JSON.stringify({ firstName, middleName, lastName, email, dateOfBirth, nationality, address })
+        body: JSON.stringify({ firstName, middleName, lastName, dateOfBirth, nationality, countryOfBirth, stateOfBirth, townOfBirth, address,profession })
     }
 
     //call fetch

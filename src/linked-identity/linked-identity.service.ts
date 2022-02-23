@@ -12,18 +12,18 @@ export class LinkedIdentityService {
   constructor(
     @InjectRepository(LinkedIdentity)
     private linkedIdentityRepository: Repository<LinkedIdentity>,
-   /* @InjectRepository(BioDatum)
-    private bioDataRepository: Repository<BioDatum>*/
+    @InjectRepository(BioDatum)
+    private bioDataRepository: Repository<BioDatum>
   ){ }
   
   async create(createLinkedIdentityDto: CreateLinkedIdentityDto) {
     const newLinkedIdentity = this.linkedIdentityRepository.create(createLinkedIdentityDto);
 
-    /*if(createLinkedIdentityDto.bioDatum){
+    if(createLinkedIdentityDto.bioDatum){
       const newBioData = this.bioDataRepository.create(createLinkedIdentityDto.bioDatum);
       const bioDatum: BioDatum = await this.bioDataRepository.save(newBioData);
       newLinkedIdentity.bioDatum = bioDatum;
-    }*/
+    }
     
     return this.linkedIdentityRepository.save(newLinkedIdentity)
     }

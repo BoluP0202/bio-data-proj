@@ -176,11 +176,22 @@
 
     const profession = document.getElementById('profession').value;
 
-    const firstName = document.getElementById('firstName').value;
-    if (firstName == '') {
-        firstName.reportValidity();
+    const NIN = document.getElementById('NIN').value;
+    if (NIN == '') {
+        NIN.reportValidity();
         return false;
     }
+    const BVN = document.getElementById('BVN').value;
+    if (BVN == '') {
+        BVN.reportValidity();
+        return false;
+    }
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    if (phoneNumber == '') {
+        phoneNumber.reportValidity();
+        return false;
+    }
+
 
     //start the button spinner
     document.getElementById("submitCreateLinkedIdentityForm").classList.add("is-loading");
@@ -192,7 +203,7 @@
             'Content-Type': 'application/json'
         },
         //credentials: 'same-origin',
-        body: JSON.stringify({ firstName, middleName, lastName, dateOfBirth, nationality, countryOfBirth, stateOfBirth, townOfBirth, address,profession,  })
+        body: JSON.stringify({NIN, BVN, phoneNumber, bioData:{ firstName, middleName, lastName, dateOfBirth, nationality, countryOfBirth, stateOfBirth, townOfBirth, address,profession}})
     }
 
     //call fetch
